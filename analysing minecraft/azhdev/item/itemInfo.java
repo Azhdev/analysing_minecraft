@@ -1,0 +1,91 @@
+package item;
+
+public class itemInfo {
+	
+	public static int magnifying_ID;
+	public static int magnifying_DEFAULT = 28132;
+	public static int plating_ID;
+	public static int plating_DEFAULT = 28133;
+	public static int largeplating_ID;
+	public static int largeplating_DEFAULT = 28134;
+	public static int ingotCenerium_ID;
+	public static int ingotCenerium_DEFAULT = 28135;
+	public static int ingotEtebrium_ID;
+	public static int ingotEtebrium_DEFAULT = 28136;
+	public static int ingotEdomium_ID;
+	public static int ingotEdomium_DEFAULT = 28137;
+	public static int ingotCremomium_ID;
+	public static int ingotCremomium_DEFAULT = 28138;
+	public static int hatchetCremomium_ID;
+	public static int hatchetCremomium_DEFAULT = 28139;
+	public static int swordCremomium_ID;
+	public static int swordCremomium_DEFAULT = 28140;
+	public static int shovelCremomium_ID;
+	public static int shovelCremomium_DEFAULT = 28141;
+	public static int hoeCremomium_ID;
+	public static int hoeCremomium_DEFAULT = 28142;
+	public static int feetCremomium_ID;
+	public static int feetCremomium_DEFAULT = 28143;
+	public static int trousersCremomium_ID;
+	public static int trousersCremomium_DEFAULT = 28144;
+	public static int doorOpener_ID;
+	public static int doorOpener_DEFAULT = 28144;
+	public static int ID_correction = 256;
+	
+	
+	public static int renderCremomium = 3;
+	
+	public static final String largeplating_UNLOCALIZEDNAME = "large_plating";
+	public static final String largeplating_KEY = "large_plating";
+	public static final String largeplating_NAME = "Large plating";
+	public static final String plating_UNLOCALIZED_NAME = "plating";
+	public static final String plating_KEY = "plating";
+	public static final String plating_NAME = "Plating";
+	public static final String magnifying_UNLOCALIZEDNAME = "magnifying_glass";
+	public static final String magnifying_KEY = "magnifyingGlass";
+	public static final String magnifying_NAME = "magnifying glass";
+	public static final String ingotCenerium_UNLOCALIZEDNAME = "ingotCenerium";
+	public static final String ingotCenerium_KEY = "ingotCenerium";
+	public static final String ingotCenerium_NAME = "Cenerium ingot";
+	public static final String ingotEtebrium_UNLOCALIZEDNAME = "ingotEtebrium";
+	public static final String ingotEtebrium_KEY = "ingotEtebrium";
+	public static final String ingotEtebrium_NAME = "Etebrium ingot";
+	public static final String ingotEdomium_UNLOCALIZEDNAME = "ingotEdomium";
+	public static final String ingotEdomium_KEY = "ingotEdomium";
+	public static final String ingotEdomium_NAME = "Edomium ingot";
+	public static final String ingotCremomium_UNLOCALIZEDNAME = "ingotCremomium";
+	public static final String ingotCremomium_KEY = "ingotCremomium";
+	public static final String ingotCremomium_NAME = "Cremomium ingot";
+	public static final String hatchetCremomium_UNLOCALIZEDNAME = "hatchetCremomium";
+	public static final String hatchetCremomium_KEY = "hatchetCremomium";
+	public static final String hatchetCremomium_NAME = "Cremomium axe";
+	public static final String swordCremomium_UNLOCALIZEDNAME = "swordCremomium";
+	public static final String swordCremomium_KEY = "swordCremomium";
+	public static final String swordcremomium_NAME = "Cremomium sword";
+	public static final String shovelCremomium_UNLOCALIZEDNAME = "shovelCremomium";
+	public static final String shovelCremomium_KEY = "shovelCremomium";
+	public static final String shovelCremomium_NAME = "cremomium shovel";
+	public static final String hoeCremomium_UNLOCALIZEDNAME = "hoeCremomium";
+	public static final String hoeCremomium_KEY = "hoeCremomium";
+	public static final String hoeCremomium_NAME = "Cremomium hoe";
+	public static final String feetCremomium_UNLOCALIZEDNAME = "feetCremomium";
+	public static final String feetCremomium_KEY = "feetCremomium";
+	public static final String feetCremomium_NAME = "cremomium feet";
+	public static final String trousersCremomium_UNLOCALIZEDNAME = "trousersCremomium";
+	public static final String trousersCremomium_KEY = "trousersCremomium";
+	public static final String trousersCremomium_NAME = "cremomium trousers";
+	
+	public static final String TEXTURE_LOCATION = "anmc";
+	public static final String Magnifying_ICON = "MagnifyingGlass";
+	public static final String Magnifying_ACTIVE = "magnifyingGlass_Charged";
+	public static final String plating_ICON = "plating";
+	public static final String largeplating_ICON = "large_plating";
+	public static final String ingotCenerium_ICON = "ingotCenerium";
+	public static final String ingotEtebrium_ICON = "ingotEtebrium";
+	public static final String ingotEdomium_ICON = "ingotEdomium";
+	public static final String ingotCremomium_ICON = "ingotCremomium";
+	public static final String hatchetCremomium_ICON = "hatchetCremomium";
+	public static final String swordCremomium_ICON = "swordCremomium";
+	public static final String shovelCremomium_ICON = "shovelCremomium";
+	public static final String hoeCremomium_ICON = "hoeCremomium";
+}

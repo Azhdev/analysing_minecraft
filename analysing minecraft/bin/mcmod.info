@@ -1,0 +1,17 @@
+[
+{
+  "modid": "ANMC",
+  "name": "analysing minecraft",
+  "description": "",
+  "version": "Alpha0.1",
+  "mcversion": "1.6.2",
+  "logoFile": "",
+  "url": "http://www.minecraftforum.net/topic/1920416-162-analysing-minecraft/#entry23685595",
+  "updateUrl": "",
+  "authors": ["Azhdev A.K.A. Kevin "],
+  "credits": "made by me with help from the community",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
