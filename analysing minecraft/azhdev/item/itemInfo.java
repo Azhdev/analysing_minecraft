@@ -28,8 +28,8 @@ public class itemInfo {
 	public static int feetCremomium_DEFAULT = 28143;
 	public static int trousersCremomium_ID;
 	public static int trousersCremomium_DEFAULT = 28144;
-	public static int doorOpener_ID;
-	public static int doorOpener_DEFAULT = 28144;
+	public static int scroll_ID;
+	public static int scroll_DEFAULT = 28145;
 	public static int ID_correction = 256;
 	
 	
@@ -71,9 +71,9 @@ public class itemInfo {
 	public static final String feetCremomium_UNLOCALIZEDNAME = "feetCremomium";
 	public static final String feetCremomium_KEY = "feetCremomium";
 	public static final String feetCremomium_NAME = "cremomium feet";
-	public static final String trousersCremomium_UNLOCALIZEDNAME = "trousersCremomium";
-	public static final String trousersCremomium_KEY = "trousersCremomium";
-	public static final String trousersCremomium_NAME = "cremomium trousers";
+	public static final String scroll_UNLOCALIZEDNAME = "SCROLL";
+	public static final String scroll_KEY = "SCROLL";
+	public static final String scroll_NAME = "Scroll";
 	
 	public static final String TEXTURE_LOCATION = "anmc";
 	public static final String Magnifying_ICON = "MagnifyingGlass";
@@ -88,4 +88,5 @@ public class itemInfo {
 	public static final String swordCremomium_ICON = "swordCremomium";
 	public static final String shovelCremomium_ICON = "shovelCremomium";
 	public static final String hoeCremomium_ICON = "hoeCremomium";
+	public static final String scroll_ICON = "scroll";
 }

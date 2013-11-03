@@ -1,5 +1,6 @@
 package client.interfaces;
 
+import item.research.scroll;
 import blocks.tileEntities.TileEntityAlloymaker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +25,9 @@ public class guiHandler implements IGuiHandler{
 					return new ContainerAlloymaker(player.inventory, (TileEntityAlloymaker)te);
 				}
 				break;
+		
+		case 1:
+				return new ContainerScroll();
 		}
 		return null;
 	}

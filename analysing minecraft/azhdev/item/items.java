@@ -9,6 +9,7 @@ import item.custom.large_plating;
 import item.custom.magnifying;
 import item.custom.shovelCremomium;
 import item.custom.swordCremomium;
+import item.research.scroll;
 import item.ingots.ingotCenerium;
 import item.ingots.ingotCremomium;
 import item.ingots.ingotEdomium;
@@ -33,7 +34,7 @@ public class items {
 	public static Item shovelCremomium;
 	public static Item hoeCremomium;
 	public static Item feetcremomium;
-	public static Item trousersCremomium;
+	public static Item scroll;
 	
 	public static void init() {
 		
@@ -49,7 +50,7 @@ public class items {
 		shovelCremomium = new shovelCremomium(itemInfo.shovelCremomium_ID, analysing_minecraft.Cremomium);
 		hoeCremomium = new hoeCremomium(itemInfo.hoeCremomium_ID, analysing_minecraft.Cremomium);
 		feetcremomium = new feetCremomium(itemInfo.feetCremomium_ID, analysing_minecraft.CremomiumArmor, itemInfo.renderCremomium,  3);
-		//trousersCremomium = new trousersCremomium(itemInfo.feetCremomium_ID, analysing_minecraft.CremomiumArmor, itemInfo.renderCremomium,  2);
+		scroll = new scroll(itemInfo.scroll_ID);
 	}
 	public static void addNames(){
 
@@ -63,7 +64,7 @@ public class items {
 		LanguageRegistry.addName(hatchetCremomium, itemInfo.hatchetCremomium_NAME);
 		LanguageRegistry.addName(swordCremomium, itemInfo.swordcremomium_NAME);
 		LanguageRegistry.addName(feetcremomium, itemInfo.feetCremomium_NAME);
-		//LanguageRegistry.addName(trousersCremomium, itemInfo.trousersCremomium_NAME);
+		LanguageRegistry.addName(scroll, itemInfo.scroll_NAME);
 	}
 	public static void loadRecipes(){
 		GameRegistry.addRecipe(new ItemStack(hatchetCremomium, 1), new Object[] {"CC ", "CS ", " S ", 'C', ingotCremomium, 'S', Item.stick});

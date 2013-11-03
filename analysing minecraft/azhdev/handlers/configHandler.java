@@ -35,7 +35,7 @@ public class configHandler {
 		itemInfo.shovelCremomium_ID = config.getItem(itemInfo.shovelCremomium_KEY, itemInfo.shovelCremomium_DEFAULT).getInt() - itemInfo.ID_correction;
 		itemInfo.hoeCremomium_ID = config.getItem(itemInfo.hoeCremomium_KEY, itemInfo.hoeCremomium_DEFAULT).getInt() - itemInfo.ID_correction;
 		itemInfo.feetCremomium_ID = config.getItem(itemInfo.feetCremomium_KEY, itemInfo.feetCremomium_DEFAULT).getInt() - itemInfo.ID_correction;
-		itemInfo.trousersCremomium_ID = config.getItem(itemInfo.trousersCremomium_KEY, itemInfo.trousersCremomium_DEFAULT).getInt() - itemInfo.ID_correction;
+		itemInfo.scroll_ID = config.getItem(itemInfo.scroll_KEY, itemInfo.scroll_DEFAULT).getInt() - itemInfo.ID_correction;
 		
 		//misc config
 		
