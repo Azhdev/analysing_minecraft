@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ANMC",
+  "name": "analysing minecraft",
+  "description": "need to make a description",
+  "version": "devBuild0.1",
+  "mcversion": "1.7.4",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Azhdev"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
