@@ -11,6 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+/**
+ * 
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
+
 public class anmcItem extends Item{
 	
 	private String info;
@@ -18,6 +26,7 @@ public class anmcItem extends Item{
 	
 	public anmcItem(){
 		super();
+		setUnlocalizedName(getClass().getSimpleName());
 	}
 	
 	public void tooltipOrNot(Boolean showToolTip){

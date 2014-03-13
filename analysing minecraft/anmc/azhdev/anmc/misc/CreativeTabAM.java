@@ -10,9 +10,9 @@ import net.minecraft.item.Item;
 
 /**
  * 
- * creative tab
- * 
- * @author azhdev
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
  *
  */
 
@@ -27,7 +27,7 @@ public class CreativeTabAM extends CreativeTabs {
 	public static CreativeTabs tabsAM;
     
 	public static void initTab(){
-		tabsAM = new CreativeTabAM(CreativeTabs.getNextID(), Reference.MOD_NAME);
+		tabsAM = new CreativeTabAM(12, Reference.MOD_NAME);
 	}
 
 @Override

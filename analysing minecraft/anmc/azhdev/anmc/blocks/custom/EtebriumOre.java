@@ -6,11 +6,19 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+/**
+ * 
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
+
 public class EtebriumOre extends BlockOre {
 
 	public EtebriumOre() {
 		super();
-		this.setBlockName("Etebrium Ore");
+		this.setBlockName(getClass().getSimpleName());
 	}
 	
 	@Override

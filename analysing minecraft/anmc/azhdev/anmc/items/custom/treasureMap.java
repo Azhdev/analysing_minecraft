@@ -3,7 +3,10 @@ package azhdev.anmc.items.custom;
 import azhdev.anmc.generic.anmcItem;
 import azhdev.anmc.items.anmcItems;
 
+import java.util.List;
 import java.util.Random;
+
+import org.lwjgl.input.Keyboard;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,12 +19,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import azhdev.anmc.misc.CreativeTabAM;
 
 /**
  * 
- * @author azhdev
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
  *
  */
 
@@ -29,10 +35,11 @@ public class treasureMap extends anmcItem{
 	
 	public treasureMap() {
 		super();
-		setUnlocalizedName("treasureMap");
+		tooltipOrNot(true);
 		setInfo("rightClick for a suprise");
+		setMaxStackSize(1);
 	}
-	private Boolean firstUse;
+	private Boolean firstUse = true;
 	private int xCoord;
 	private int yCoord;
 	private int zCoord;
@@ -64,12 +71,29 @@ public class treasureMap extends anmcItem{
 			if(chest != null){
 				chest.setInventorySlotContents(15, anmcIngot);
 			}
-			//setUse(false);
+			setUse(false);
 		//}else{
 			//System.out.println("already used");
 			//return false;
 		//}
 		return false;
+    }
+
+	
+	@Override
+	public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4){
+    		if(Keyboard.isKeyDown(42)){
+    			if(getUse() == true){
+    				list.add(StatCollector.translateToLocal("< " + "rightClick for suprise" + " >"));
+    			}else{
+    				list.add(StatCollector.translateToLocal("the chest has spawned at :"));
+    				list.add(StatCollector.translateToLocal("X:" + xCoord));
+    				list.add(StatCollector.translateToLocal("Y:" + yCoord));
+    				list.add(StatCollector.translateToLocal("Z:" + zCoord));
+    			}
+    		}else{
+    			list.add("< Hold shift for info >");
+    		}
     }
 	       
 }

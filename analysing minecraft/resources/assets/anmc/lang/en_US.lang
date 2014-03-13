@@ -1,0 +1,13 @@
+tile.battery.name=Battery
+tile.CeneriumOre.name=Cenerium ore
+tile.EtebriumOre.name=Etebrium ore
+tile.EdomiumOre.name=Edomium ore
+tile.InfuserBlock.name=Infuser
+tile.Pipe.name=Pipe
+
+item.anmcHammer.name=Hammer
+item.anmcIngot.name=Cenerium ingot
+item.tempItem.name=temp
+item.treasureMap.name=Treasure map
+
+itemGroup.analysing minecraft=Analysing Minecraft

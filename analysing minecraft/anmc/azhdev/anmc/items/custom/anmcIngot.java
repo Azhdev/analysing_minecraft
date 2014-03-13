@@ -13,10 +13,17 @@ import net.minecraft.util.StatCollector;
 import azhdev.anmc.generic.anmcItem;
 import azhdev.anmc.misc.CreativeTabAM;
 
+/**
+ * 
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
+
 public class anmcIngot extends anmcItem {
 	
 	public anmcIngot() {
 		super();
-		this.setUnlocalizedName("ingot");
 	}
 }
