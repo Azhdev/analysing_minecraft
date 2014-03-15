@@ -47,13 +47,16 @@ public class anmcBlocks {
 		
 		infuser = new InfuserBlock(Material.iron);
 		GameRegistry.registerBlock(infuser, "infuser");
+		
+		Pipe = new Pipe(Material.iron);
+		GameRegistry.registerBlock(Pipe, "pipe");
 	}
 	public static void addNames(){
 
 	}
 	
 	public static void registerTileEntities(){
-		//GameRegistry.registerTileEntity(tileEntityPipe.class, "Pipe");
+		GameRegistry.registerTileEntity(tileEntityPipe.class, "Pipe");
 		GameRegistry.registerTileEntity(TileEntityInfuser.class, "infuser");
 	}
 	
@@ -61,7 +64,7 @@ public class anmcBlocks {
 		CeneriumOre.setCreativeTab(CreativeTabAM.tabsAM);
 		EdomiumOre.setCreativeTab(CreativeTabAM.tabsAM);
 		EtebriumOre.setCreativeTab(CreativeTabAM.tabsAM);
-		//Pipe.setCreativeTab(CreativeTabAM.tabsAM);
+		Pipe.setCreativeTab(CreativeTabAM.tabsAM);
 		battery.setCreativeTab(CreativeTabAM.tabsAM);
 		infuser.setCreativeTab(CreativeTabAM.tabsAM);
 	}

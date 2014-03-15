@@ -7,26 +7,28 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityInfuser extends TileEntity implements IInventory{
+/**
+ * 
+ * TileEntityExtractPipe.java
+ *
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
 
-	private ItemStack[] items;
+public class TileEntityExtractPipe extends TileEntity implements IHopper, IInventory{
+
+	public ItemStack[] items;
 	
 	public int inventorySize = 4;
+	public int transferCooldown;
+	public int cooldownConstant = 200;
 	
-	private static int totalCookTime = 200;
-	private static int currentCookTime;
-	private static int remainingBurnTime = totalCookTime - currentCookTime;
-	
-	public TileEntityInfuser(){
+	public TileEntityExtractPipe(){
 		items = new ItemStack[inventorySize];
-	}
-	
-	@Override
-	public void updateEntity(){
-		
 	}
 	
 	@Override
@@ -76,10 +78,57 @@ public class TileEntityInfuser extends TileEntity implements IInventory{
             itemStack.stackSize = getInventoryStackLimit();
         }
 	}
-
+	
+	@Override
+	public void writeToNBT(NBTTagCompound compound){
+		super.writeToNBT(compound);
+		
+		NBTTagList items = new NBTTagList();
+		
+		//saving the items
+		for(int i = 0; i < getSizeInventory(); i++){
+			
+			ItemStack stack = getStackInSlot(i);
+			
+			if(stack != null){
+			
+				NBTTagCompound item = new NBTTagCompound();
+				
+				item.setByte("slot", (byte)i);
+				stack.writeToNBT(item);
+				items.appendTag(item);
+			}
+		}
+		
+		//saving the misc variables
+		compound.setInteger("transferCooldown", transferCooldown);
+		
+		compound.setTag("Items", items);
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound compound){
+		super.readFromNBT(compound);
+		
+		NBTTagList items = compound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+		
+		
+		//reading the items 
+		for(int i = 0; i < items.tagCount();i++){
+			NBTTagCompound item = (NBTTagCompound)items.getCompoundTagAt(i);
+			int slot = item.getByte("slot");
+			if(slot >= 0 && slot < getSizeInventory()){
+				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
+			}
+		}
+		
+		//reading the misc variables
+		transferCooldown = compound.getInteger("transferCooldown");
+	}
+	
 	@Override
 	public String getInventoryName() {
-		return "Infuser";
+		return "pipe";
 	}
 
 	@Override
@@ -100,57 +149,26 @@ public class TileEntityInfuser extends TileEntity implements IInventory{
 
 	@Override
 	public boolean isItemValidForSlot(int var1, ItemStack var2) {
-		return true;
+		return false;
 	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound compound){
-		super.writeToNBT(compound);
-		
-		NBTTagList items = new NBTTagList();
-		
-		compound.setInteger("currentCookTime", currentCookTime);
-		compound.setInteger("remainingBurnTime", remainingBurnTime);
-		
-		for(int i = 0; i < getSizeInventory(); i++){
-			
-			ItemStack stack = getStackInSlot(i);
-			
-			if(stack != null){
-			
-				NBTTagCompound item = new NBTTagCompound();
-				
-				item.setByte("slot", (byte)i);
-				stack.writeToNBT(item);
-				items.appendTag(item);
-			}
-		}
-		compound.setTag("Items", items);
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound compound){
-		super.readFromNBT(compound);
-		
-		NBTTagList items = compound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
-		
-		for(int i = 0; i < items.tagCount();i++){
-			NBTTagCompound item = (NBTTagCompound)items.getCompoundTagAt(i);
-			int slot = item.getByte("slot");
-			if(slot >= 0 && slot < getSizeInventory()){
-				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
-			}
-		}
-	}
-
 	
+	@Override
+	public double getXPos() {
+		return 0;
+	}
+
+	@Override
+	public double getYPos() {
+		return 0;
+	}
+
+	@Override
+	public double getZPos() {
+		return 0;
+	}
+
 	@Override
 	public boolean hasCustomInventoryName() {
 		return false;
 	}
-
-	@Override
-	public void markDirty() {
-		
-	}	
 }

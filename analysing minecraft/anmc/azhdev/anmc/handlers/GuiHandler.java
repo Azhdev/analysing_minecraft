@@ -5,8 +5,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import azhdev.anmc.mainModClass;
 import azhdev.anmc.blocks.tileEntities.TileEntityInfuser;
+import azhdev.anmc.blocks.tileEntities.tileEntityPipe;
 import azhdev.anmc.client.Container.ContainerInfuser;
+import azhdev.anmc.client.Container.containerPipe;
 import azhdev.anmc.client.interfaces.GuiInfuser;
+import azhdev.anmc.client.interfaces.GuiPipe;
 import azhdev.anmc.lib.GuiIDs;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -32,6 +35,11 @@ public class GuiHandler  implements IGuiHandler{
 			if(te != null && te instanceof TileEntityInfuser){
 				return new ContainerInfuser(player.inventory, (TileEntityInfuser)te);
 			}
+		}else if(ID == GuiIDs.pipeGuiID){
+			tileEntityPipe te = (tileEntityPipe)world.getTileEntity(x, y, z);
+			if(te != null && te instanceof tileEntityPipe){
+				return new containerPipe(player.inventory, (tileEntityPipe)te);
+			}
 		}
 		return null;
 	}
@@ -42,6 +50,11 @@ public class GuiHandler  implements IGuiHandler{
 			TileEntity te = world.getTileEntity(x, y, z);
 			if(te != null && te instanceof TileEntityInfuser){
 				return new GuiInfuser(player.inventory, (TileEntityInfuser)te);
+			}
+		}else if(ID == GuiIDs.pipeGuiID){
+			tileEntityPipe te = (tileEntityPipe)world.getTileEntity(x, y, z);
+			if(te != null && te instanceof tileEntityPipe){
+				return new GuiPipe(player.inventory, (tileEntityPipe)te);
 			}
 		}
 		
