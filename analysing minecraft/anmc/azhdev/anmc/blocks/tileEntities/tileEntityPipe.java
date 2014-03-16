@@ -1,5 +1,6 @@
 package azhdev.anmc.blocks.tileEntities;
 
+import azhdev.anmc.items.anmcItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -8,7 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * 
@@ -22,12 +25,19 @@ public class tileEntityPipe extends TileEntity implements IHopper, IInventory{
 
 	public ItemStack[] items;
 	
+	public ForgeDirection direction;
+	
 	public int inventorySize = 4;
 	public int transferCooldown;
 	public int cooldownConstant = 200;
 	
 	public tileEntityPipe(){
 		items = new ItemStack[inventorySize];
+	}
+	
+	@Override
+	public void updateEntity(){
+		
 	}
 	
 	@Override
@@ -169,5 +179,49 @@ public class tileEntityPipe extends TileEntity implements IHopper, IInventory{
 	@Override
 	public boolean hasCustomInventoryName() {
 		return false;
+	}
+	
+	private void insertItem(World world, int x, int y, int z){
+		if(canInsertItem(world, x, y, z)){
+			
+		}
+	}
+	
+	private boolean canInsertItem(World world, int x, int y, int z){
+		int var1 = 0;
+		if(!world.isRemote){
+			
+			TileEntity te = world.getTileEntity(x, y, z);
+			if(te instanceof IInventory){
+				for(int i = 0; i < ((IInventory) te).getSizeInventory(); i++){
+					if(((IInventory) te).getStackInSlot(i).stackSize < 65){
+						var1++;
+					}
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+		if(var1 > 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public void getUpgrades(tileEntityPipe pipe){
+		
+		int speedAmount = 0;
+		int grabAmount = 0;
+		
+		for(int i = 0; i < 3; i++){
+			ItemStack stack = pipe.getStackInSlot(i+1);
+			if(stack.getItem() == anmcItems.upgrade){
+				speedAmount = stack.stackSize;
+			}else if (stack.getItem() == anmcItems.suckUpgrade){
+				grabAmount = stack.stackSize;
+			}
+		}
 	}
 }

@@ -1,9 +1,5 @@
 package azhdev.anmc.client.interfaces;
 
-/**
- * 
- */
-
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -11,22 +7,30 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import azhdev.anmc.blocks.tileEntities.TileEntityExtractPipe;
-import azhdev.anmc.blocks.tileEntities.tileEntityPipe;
-import azhdev.anmc.client.Container.ContainerPipe;
 import azhdev.anmc.client.Container.containerExtractPipe;
 
-public class GuiPipe extends GuiContainer{
+/**
+ * 
+ * GuiExtractPipe.java
+ *
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
+
+public class GuiExtractPipe extends GuiContainer{
 
 	
 	
-	public GuiPipe(InventoryPlayer playerInv, tileEntityPipe pipe) {
-		super(new ContainerPipe(playerInv, pipe));
+	public GuiExtractPipe(InventoryPlayer playerInv, TileEntityExtractPipe pipe) {
+		super(new containerExtractPipe(playerInv, pipe));
 		
 		xSize = 176;
 		ySize = 154;
 	}
 
-	private static ResourceLocation texture  = new ResourceLocation("anmc", "textures/gui/pipe.png");
+	private static ResourceLocation texture  = new ResourceLocation("anmc", "textures/gui/pipe_extract.png");
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {

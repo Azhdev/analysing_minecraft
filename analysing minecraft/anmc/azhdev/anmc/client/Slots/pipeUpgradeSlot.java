@@ -14,7 +14,11 @@ public class pipeUpgradeSlot extends Slot{
 	
 	@Override
 	public boolean isItemValid(ItemStack itemstack){
-		return itemstack.getItem() == anmcItems.upgrade;
+		if(itemstack.getItem() == anmcItems.upgrade || itemstack.getItem() == anmcItems.suckUpgrade){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	@Override

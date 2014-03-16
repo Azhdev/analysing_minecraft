@@ -9,6 +9,7 @@ import azhdev.anmc.blocks.custom.EtebriumOre;
 import azhdev.anmc.blocks.custom.InfuserBlock;
 import azhdev.anmc.blocks.custom.Pipe;
 import azhdev.anmc.blocks.custom.battery;
+import azhdev.anmc.blocks.custom.extractPipe;
 import azhdev.anmc.blocks.tileEntities.TileEntityInfuser;
 import azhdev.anmc.blocks.tileEntities.tileEntityPipe;
 import azhdev.anmc.misc.CreativeTabAM;
@@ -29,6 +30,7 @@ public class anmcBlocks {
 	public static Block EdomiumOre;
 	public static Block EtebriumOre;
 	public static Block Pipe;
+	public static Block extractPipe;
 	public static Block battery;
 	public static Block infuser;
 	
@@ -50,6 +52,9 @@ public class anmcBlocks {
 		
 		Pipe = new Pipe(Material.iron);
 		GameRegistry.registerBlock(Pipe, "pipe");
+		
+		extractPipe = new extractPipe(Material.iron);
+		GameRegistry.registerBlock(extractPipe, "extract");
 	}
 	public static void addNames(){
 
@@ -65,6 +70,7 @@ public class anmcBlocks {
 		EdomiumOre.setCreativeTab(CreativeTabAM.tabsAM);
 		EtebriumOre.setCreativeTab(CreativeTabAM.tabsAM);
 		Pipe.setCreativeTab(CreativeTabAM.tabsAM);
+		extractPipe.setCreativeTab(CreativeTabAM.tabsAM);
 		battery.setCreativeTab(CreativeTabAM.tabsAM);
 		infuser.setCreativeTab(CreativeTabAM.tabsAM);
 	}

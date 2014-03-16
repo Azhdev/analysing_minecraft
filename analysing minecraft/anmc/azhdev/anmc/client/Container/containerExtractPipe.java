@@ -5,6 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import azhdev.anmc.blocks.tileEntities.TileEntityExtractPipe;
 import azhdev.anmc.blocks.tileEntities.tileEntityPipe;
 import azhdev.anmc.client.Slots.pipeUpgradeSlot;
 
@@ -16,16 +17,16 @@ import azhdev.anmc.client.Slots.pipeUpgradeSlot;
  *
  */
 
-public class ContainerPipe extends Container{
+public class containerExtractPipe extends Container{
 
-	private tileEntityPipe pipe;
+	private TileEntityExtractPipe pipe;
 	private final int playerInvRows = 3;
 	private final int playerInvColumns = 9;
 	private final int xCoordFirstSlotInRowPlayerInv = 8;
 	private final int yCoordFirstSlotInColumnPlayerInv = 72;
 	
 	
-	public ContainerPipe(InventoryPlayer playerInv, tileEntityPipe pipe){
+	public containerExtractPipe(InventoryPlayer playerInv, TileEntityExtractPipe pipe){
 		this.pipe = pipe;
 		
 		addVanillaSlots(playerInv, pipe);
@@ -37,11 +38,15 @@ public class ContainerPipe extends Container{
 		return pipe.isUseableByPlayer(var1);
 	}
 	
-	private void addPipeSlots(InventoryPlayer playerInv, tileEntityPipe pipe){
+	private void addPipeSlots(InventoryPlayer playerInv, TileEntityExtractPipe pipe){
 		this.addSlotToContainer(new Slot(pipe, 0, 80, 17));
+		
+		this.addSlotToContainer(new pipeUpgradeSlot(pipe, 1, 152, 10));
+		this.addSlotToContainer(new pipeUpgradeSlot(pipe, 2, 152, 28));
+		this.addSlotToContainer(new pipeUpgradeSlot(pipe, 3, 152, 46));
 	}
 	
-	private void addVanillaSlots(InventoryPlayer playerInv, tileEntityPipe pipe){
+	private void addVanillaSlots(InventoryPlayer playerInv, TileEntityExtractPipe pipe){
 		
 		for(int inventoryRowIndex = 0; inventoryRowIndex < playerInvRows; inventoryRowIndex++){
 			for(int inventoryColumnIndex = 0; inventoryColumnIndex < playerInvColumns; inventoryColumnIndex++){
