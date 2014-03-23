@@ -1,11 +1,5 @@
 package azhdev.anmc.blocks.custom;
 
-import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
-import azhdev.anmc.mainModClass;
-import azhdev.anmc.blocks.tileEntities.TileEntityExtractPipe;
-import azhdev.anmc.blocks.tileEntities.tileEntityPipe;
-import azhdev.anmc.items.anmcItems;
-import azhdev.anmc.lib.GuiIDs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -15,7 +9,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Facing;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import azhdev.anmc.mainModClass;
+import azhdev.anmc.blocks.tileEntities.TileEntityExtractPipe;
+import azhdev.anmc.items.anmcItems;
+import azhdev.anmc.lib.GuiIDs;
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * 
@@ -32,10 +35,26 @@ public class extractPipe extends BlockContainer{
 		setHardness(2.0F);
 		setBlockName("extractPipe");
 	}
+	
+	
+	@SideOnly(Side.CLIENT)
+	private IIcon inputIcon;
+	private IIcon outputIcon;
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister register){
 
-	public void registerIcons(IIconRegister register){
-
-		blockIcon = register.registerIcon("anmc:extractPipe");
+		blockIcon = register.registerIcon("anmc:pipeNeutral");
+		inputIcon = register.registerIcon("anmc:pipeInput");
+		outputIcon = register.registerIcon("anmc:pipeOutput");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int side, int meta){
+		return blockIcon;
+		
 	}
 	
 	@Override
@@ -43,7 +62,23 @@ public class extractPipe extends BlockContainer{
 		return new TileEntityExtractPipe();
 	}
 	
+	@Override
+	public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9){
+        int facing = Facing.oppositeSide[par5];
+
+        if (facing == 1)
+        {
+            facing = 0;
+        }
+
+        return facing;
+    }
 	
+	@Override
+	public void onBlockAdded(World world, int x, int y, int z){
+        super.onBlockAdded(world, x, y, z);
+        this.updateMetadata(world, x, y, z);
+    }
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ){
@@ -52,7 +87,7 @@ public class extractPipe extends BlockContainer{
 					FMLNetworkHandler.openGui(player, mainModClass.instance, GuiIDs.pipeExtractGuiID, world, x, y, z);
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -86,11 +121,30 @@ public class extractPipe extends BlockContainer{
 			}
 		}
 	}
-	
-	@Override
-	public boolean onBlockEventReceived(World world, int p_149696_2_, int p_149696_3_, int p_149696_4_, int p_149696_5_, int p_149696_6_){
-		return blockConstructorCalled;
-		
+
+	public static boolean getIsBlockNotPoweredFromMetadata(int blockMetadata) {
+	        return (blockMetadata & 8) != 8;
+	}
+
+
+	public static int getDirectionFromMetadata(int blockMetadata) {
+		return blockMetadata & 7;
 	}
 	
+	
+	private void updateMetadata(World world, int x, int y, int z){
+		int meta = world.getBlockMetadata(x, y, z);
+        int direction = getDirectionFromMetadata(meta);
+        boolean powered = !world.isBlockIndirectlyGettingPowered(x, y, z);
+        boolean notpowered = getIsBlockNotPoweredFromMetadata(meta);
+
+        if (powered != notpowered){
+            world.setBlockMetadataWithNotify(x, y, z, direction | (powered ? 0 : 8), 4);
+        }
+    }
+	
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbour) {
+		this.updateMetadata(world, x, y, z);
+	}
 }

@@ -1,22 +1,25 @@
 package azhdev.anmc.blocks.tileEntities;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.entity.item.EntityItem;
+import java.util.List;
+
+import net.minecraft.command.IEntitySelector;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.ForgeDirection;
+import azhdev.anmc.blocks.custom.extractPipe;
+import azhdev.anmc.items.anmcItems;
+import azhdev.anmc.misc.ExtractorPipe;
+import azhdev.anmc.util.InventoryHelper;
 
 /**
  * 
@@ -28,20 +31,34 @@ import net.minecraftforge.common.util.ForgeDirection;
  *
  */
 
-public class TileEntityExtractPipe extends TileEntity implements IHopper, IInventory{
-
+public class TileEntityExtractPipe extends TileEntity implements IInventory, ExtractorPipe{
 	public ItemStack[] items;
 	
-	public int inventorySize = 4;
-	public int transferCooldown;
-	public int cooldownConstant = 200;
-	int r = 0;
+	public World world;
 	
+	public int inventorySize = 4;
+	public static int transferCooldown = 0;
+	public int cooldownConstant = 200;
+	public int outputStack;
+	
+	public static int speedAmount;
+	public static int grabAmount;
+	public static int speedTemp;
+	public static int grabTemp;
+	
+	public static int transferTemp;
+	
+	static int slotsvar = 0;
+	static int[] slots = new int[slotsvar];
 	
 	public TileEntityExtractPipe(){
 		items = new ItemStack[inventorySize];
 	}
-
+	
+	public TileEntityExtractPipe getPipe(int x, int y, int z){
+		return (TileEntityExtractPipe)this.worldObj.getTileEntity(x, y, z);
+	}
+	
 	@Override
 	public ItemStack getStackInSlot(int var1) {
 		return items[var1];
@@ -49,14 +66,50 @@ public class TileEntityExtractPipe extends TileEntity implements IHopper, IInven
 	
 	@Override
 	public void updateEntity(){
-		if(r > 0){
-			return;
-		}else{
-			r++;
-			getInventoryAtLocation(hopper.getWorldObj(), hopper.getXPos(), hopper.getYPos() + 1.0D, hopper.getZPos()
-		}
+		this.getUpgrades();
+		if (this.worldObj != null && !this.worldObj.isRemote){
+            this.transferCooldown--;
+
+            if (!this.isCoolingDown()){
+                this.setTransferCooldown(0);
+                this.updateExtractor();
+            }
+        }
 	}
 	
+	public boolean updateExtractor() {
+		this.getUpgrades();
+		if (this.worldObj != null && !this.worldObj.isRemote){
+            if (!this.isCoolingDown() && extractPipe.getIsBlockNotPoweredFromMetadata(this.getBlockMetadata())){
+                boolean var1 = this.insertItemToInventory();
+                var1 = InventoryHelper.suckItemsIntoExtractor(this) || var1;
+
+                if (var1){
+                    this.setTransferCooldown(20);
+                    this.onInventoryChanged();
+                    return true;
+                }
+            }
+
+            return false;
+        }else{
+            return false;
+        }
+	}
+
+	public void onInventoryChanged() {
+		super.markDirty();
+	}
+
+	public void setTransferCooldown(int i) {
+		transferCooldown = i;
+		
+	}
+
+	private boolean isCoolingDown() {
+		return transferCooldown > 0;
+	}
+
 	@Override
 	public ItemStack decrStackSize(int slotIndex, int decrAmount) {
 		ItemStack itemStack = getStackInSlot(slotIndex);
@@ -97,7 +150,7 @@ public class TileEntityExtractPipe extends TileEntity implements IHopper, IInven
 	
 	@Override
 	public void writeToNBT(NBTTagCompound compound){
-		//super.writeToNBT(compound);
+		super.writeToNBT(compound);
 		
 		NBTTagList items = new NBTTagList();
 		
@@ -169,56 +222,106 @@ public class TileEntityExtractPipe extends TileEntity implements IHopper, IInven
 	}
 	
 	@Override
-	public double getXPos() {
-		return xCoord;
-	}
-
-	@Override
-	public double getYPos() {
-		return yCoord;
-	}
-
-	@Override
-	public double getZPos() {
-		return zCoord;
-	}
-
-	@Override
 	public boolean hasCustomInventoryName() {
 		return false;
 	}
-
+	
+	private void setSpeedAmount(int i){
+		speedAmount = i;
+	}
+	
 	@Override
 	public int getSizeInventory() {
 		return items.length;
 	}
 	
-	public static IInventory getInventoryAboveHopper(IHopper hopper){
-        return getInventoryAtLocation(hopper.getWorldObj(), hopper.getXPos(), hopper.getYPos() + 1.0D, hopper.getZPos());
-    }
-	
+	private static boolean isAbleToMoveitems(TileEntityExtractPipe pipe){
+		if(transferCooldown == 0 && pipe.getStackInSlot(0) != null){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 	public static IInventory getInventoryAtLocation(World world, double x, double y, double z){
-        IInventory var7 = null;
-        int var8 = MathHelper.floor_double(x);
-        int var9 = MathHelper.floor_double(y);
-        int var10 = MathHelper.floor_double(z);
-        TileEntity var11 = world.getTileEntity(var8, var9, var10);
+        IInventory Inv = null;
+        int X = MathHelper.floor_double(x);
+        int Y = MathHelper.floor_double(y);
+        int Z = MathHelper.floor_double(z);
+        TileEntity tile = world.getTileEntity(X, Y, Z);
 
-        if (var11 != null && var11 instanceof IInventory)
+        if (tile != null && tile instanceof IInventory)
         {
-            var7 = (IInventory)var11;
+            Inv = (IInventory)tile;
+        }
 
-            if (var7 instanceof TileEntityChest)
+        if (Inv == null)
+        {
+            List var14 = world.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getAABBPool().getAABB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D), IEntitySelector.selectInventories);
+
+            if (var14 != null && var14.size() > 0)
             {
-                Block var12 = world.getBlock(var8, var9, var10);
-                
-                if (var12 instanceof BlockChest){
-                    var7 = (IInventory)((BlockChest)var12);
-                }
-                System.out.print(var7);
+                Inv = (IInventory)var14.get(world.rand.nextInt(var14.size()));
             }
         }
-		return var7;
+
+        return Inv;
+    }
+	
+	private IInventory getOutputInventory(){
+        int var1 = extractPipe.getDirectionFromMetadata(this.getBlockMetadata());
+        return getInventoryAtLocation(this.getWorldObj(), (double)(this.xCoord + Facing.offsetsXForSide[var1]), (double)(this.yCoord + Facing.offsetsYForSide[var1]), (double)(this.zCoord + Facing.offsetsZForSide[var1]));
+    }
+
+	@Override
+	public double getXpos() {
+		return 0;
+	}
+
+	@Override
+	public double getYpos() {
+		return 0;
+	}
+
+	@Override
+	public double getZpos() {
+		return 0;
+	}
+	
+	public boolean insertItemToInventory() {
+		IInventory var1 = this.getOutputInventory();
+
+        if (var1 == null){
+            return false;
+        }else{
+            if (this.getStackInSlot(0) != null){
+            	ItemStack var3 = this.getStackInSlot(0).copy();
+                ItemStack var4 = InventoryHelper.insertStack(var1, this.decrStackSize(0, 1), Facing.oppositeSide[extractPipe.getDirectionFromMetadata(this.getBlockMetadata())]);
+
+                if (var4 == null || var4.stackSize == 0){
+                	var1.markDirty();
+                    return true;
+                }
+
+                this.setInventorySlotContents(0, var3);
+            }
+
+            return false;
+        }
+	}
+	
+	private  void getUpgrades(){
+		speedTemp = 0;
+		grabTemp = 0;
+		for(int i = 1; i > 3; i++){
+			if(this.getStackInSlot(i).getItem() == anmcItems.upgrade){
+				speedTemp = speedTemp + this.getStackInSlot(i).stackSize;
+				//System.out.println("okay");
+			}else if(this.getStackInSlot(i).getItem() == anmcItems.suckUpgrade){
+				grabTemp = grabTemp + this.getStackInSlot(i).stackSize;
+			}
+		}
+		setSpeedAmount(speedTemp * 2);
+		grabAmount = grabTemp;
 	}
 }

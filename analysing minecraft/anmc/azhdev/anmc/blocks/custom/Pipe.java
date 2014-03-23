@@ -1,6 +1,8 @@
 package azhdev.anmc.blocks.custom;
 
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import azhdev.anmc.mainModClass;
 import azhdev.anmc.blocks.tileEntities.tileEntityPipe;
 import azhdev.anmc.items.anmcItems;
@@ -32,7 +34,9 @@ public class Pipe extends BlockContainer{
 		setBlockName("Pipe");
 	}
 
-	public void registerIcons(IIconRegister register){
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister register){
 
 		blockIcon = register.registerIcon("anmc:pipe");
 	}

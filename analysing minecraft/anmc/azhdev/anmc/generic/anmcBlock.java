@@ -1,5 +1,7 @@
 package azhdev.anmc.generic;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import azhdev.anmc.misc.CreativeTabAM;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,7 +23,9 @@ public class anmcBlock extends Block {
 	}
 	
 	
-	public void registerIcons(IIconRegister register){
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister register){
 		blockIcon = register.registerIcon("anmc:" + getClass().getSimpleName());
 	}
 }
