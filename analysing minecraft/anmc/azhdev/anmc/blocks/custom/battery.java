@@ -1,7 +1,7 @@
 package azhdev.anmc.blocks.custom;
 
+import azhdev.anmc.Generic.AzhdevBlock;
 import net.minecraft.block.material.Material;
-import azhdev.anmc.generic.anmcBlock;
 
 /**
  * 
@@ -11,7 +11,7 @@ import azhdev.anmc.generic.anmcBlock;
  *
  */
 
-public class battery extends anmcBlock {
+public class battery extends AzhdevBlock {
 
 	public battery(Material mat) {
 		super(mat);

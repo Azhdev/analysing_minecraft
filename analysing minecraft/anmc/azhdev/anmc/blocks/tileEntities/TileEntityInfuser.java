@@ -1,25 +1,42 @@
 package azhdev.anmc.blocks.tileEntities;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
+import azhdev.anmc.lib.Reference;
+import azhdev.anmc.misc.InfuserRecipes;
+import azhdev.anmc.util.Log;
+
+/**
+ * 
+ * TileEntityInfuser.java
+ *
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
 
 public class TileEntityInfuser extends TileEntity implements IInventory{
 
 	private ItemStack[] items;
+	private Item[] recipeItems;
 	
-	public int inventorySize = 4;
-	
-	private static int totalCookTime = 200;
-	private static int currentCookTime;
-	private static int remainingBurnTime = totalCookTime - currentCookTime;
+	public int inventorySize = 5;
+	ForgeDirection d;
+	private int totalCookTime = 200;
+	private int currentCookTime;
+	private int currentItemInfusetime;
+	private int remainingBurnTime = totalCookTime - currentCookTime;
 	
 	public TileEntityInfuser(){
 		items = new ItemStack[inventorySize];
@@ -28,6 +45,55 @@ public class TileEntityInfuser extends TileEntity implements IInventory{
 	@Override
 	public void updateEntity(){
 		
+		boolean var1 = this.currentCookTime > 0;
+		boolean var2 = false;
+		
+		if(this.currentCookTime > 0){
+			this.currentCookTime--;
+		}
+		
+		if(!worldObj.isRemote){
+			if(this.currentCookTime == 0 && canInfuse()){
+				this.currentItemInfusetime = this.currentCookTime = getItemInfuseTime(this.items[4]);
+				
+				if(this.currentCookTime > 0){
+					var2 = true;
+					
+					if(this.items[4] != null){
+						this.items[4].stackSize--;
+						
+						if(this.items[4].stackSize == 0){
+							Item var3 = this.items[4].getItem().getContainerItem();
+							this.items[4] = var3 != null ? new ItemStack(var3) : null;
+						}
+					}
+				}
+			}
+			
+			if(this.isInfusing() && this.canInfuse()){
+				this.currentCookTime++;
+				
+				if(this.currentCookTime == totalCookTime){
+					this.currentCookTime = 0;
+					Log.addInfo("starting infusing item");
+					this.infuseItem();
+					var2 = true;
+				}
+			}else{
+				this.currentCookTime = 0;
+			}
+			if(var1 != this.currentCookTime > 0){
+				var2 = true;
+				
+			}
+		}
+		if(var2){
+			this.markDirty();
+		}
+	}
+	
+	public boolean isInfusing(){
+		return this.currentCookTime > 0;
 	}
 	
 	@Override
@@ -152,6 +218,75 @@ public class TileEntityInfuser extends TileEntity implements IInventory{
 
 	@Override
 	public void markDirty() {
+		super.markDirty();
+	}
+	
+	private boolean canInfuse(){
+		if(items[0] == null || items[1] == null || items[2] == null){
+			return false;
+		}
+		ItemStack itemstack = InfuserRecipes.getResult(items[0].getItem(), items[1].getItem(), items[2].getItem());
+        if (itemstack == null){
+        	return false;
+        }
+        if (this.items[3] == null){
+        	return true;
+        }
+        if (!this.items[3].isItemEqual(itemstack)){
+        	return false;
+        }
+        int result = items[3].stackSize + itemstack.stackSize;
+        if(result <= getInventoryStackLimit() && result <= this.items[3].getMaxStackSize()){
+        	return true;
+        }else{
+        	return false;
+        }
+	}
+	
+	public void infuseItem(){
+		if(this.canInfuse()){
+			
+			ItemStack var1 = InfuserRecipes.getResult(items[0].getItem(), items[1].getItem(), items[2].getItem());
+			
+			if(this.items[3] == null){
+				this.items[3] = var1.copy();
+			}else if(this.items[3].getItem() == var1.getItem()){
+				this.items[3].stackSize++;
+			}
+			
+			for(int k = 0; k > 2; k++){
+				this.items[k].stackSize--;
+				if(this.items[k].stackSize <= 0){
+					this.items[k] = null;
+				}
+			}
+			Log.addInfo("infused item");
+		}else{
+			return;
+		}
+	}
+	
+	public static int getItemInfuseTime(ItemStack theStack){
+		if(theStack == null){
+			return 0;
+		}else{
+			Item var1 = theStack.getItem();
+			Block var2 = Block.getBlockFromItem(var1);
+			if(var1 == Items.coal){
+				return 2000;
+			}
+			if(var2 == Blocks.coal_block){
+				return 16000;
+			}else{
+				return 0;
+			}
+		}
 		
-	}	
+	}
+	
+	public static boolean isItemFuel(ItemStack theStack){
+		return getItemInfuseTime(theStack) > 0;
+	}
+	
+	
 }

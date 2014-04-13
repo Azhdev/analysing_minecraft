@@ -31,8 +31,7 @@ public class renderBatteryitem implements IItemRenderer{
 	}
 
 	@Override
-	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-			ItemRendererHelper helper) {
+	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 		return true;
 	}
 

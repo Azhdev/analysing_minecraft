@@ -38,7 +38,7 @@ public class Pipe extends BlockContainer{
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register){
 
-		blockIcon = register.registerIcon("anmc:pipe");
+		blockIcon = register.registerIcon("anmc:pipeNeutral");
 	}
 	
 	@Override

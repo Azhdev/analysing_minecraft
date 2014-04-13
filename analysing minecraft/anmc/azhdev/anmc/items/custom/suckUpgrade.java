@@ -1,8 +1,8 @@
 package azhdev.anmc.items.custom;
 
-import azhdev.anmc.generic.anmcItem;
+import azhdev.anmc.Generic.AzhdevItem;
 
-public class suckUpgrade extends anmcItem {
+public class suckUpgrade extends AzhdevItem {
 	public suckUpgrade(){
 		super();
 	}

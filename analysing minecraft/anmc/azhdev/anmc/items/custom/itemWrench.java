@@ -1,8 +1,8 @@
 package azhdev.anmc.items.custom;
 
-import azhdev.anmc.generic.anmcItem;
+import azhdev.anmc.Generic.AzhdevItem;
 
-public class itemWrench extends anmcItem {
+public class itemWrench extends AzhdevItem {
 	public itemWrench(){
 		super();
 		setMaxStackSize(1);

@@ -16,6 +16,6 @@ public class SlotInfuserOutput extends Slot{
 	
 	@Override
 	public boolean isItemValid(ItemStack itemstack){
-		return itemstack.getItem() == anmcItems.ingot;
+		return true; //itemstack.getItem() == anmcItems.ingot;
 	}
 }

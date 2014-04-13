@@ -1,27 +1,23 @@
 package azhdev.anmc.items.custom;
 
-import azhdev.anmc.generic.anmcItem;
-import azhdev.anmc.items.anmcItems;
-
 import java.util.List;
 import java.util.Random;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import azhdev.anmc.misc.CreativeTabAM;
+
+import org.lwjgl.input.Keyboard;
+
+import azhdev.anmc.Generic.AzhdevItem;
+import azhdev.anmc.items.anmcItems;
 
 /**
  * 
@@ -31,68 +27,47 @@ import azhdev.anmc.misc.CreativeTabAM;
  *
  */
 
-public class treasureMap extends anmcItem{
+public class treasureMap extends AzhdevItem{
 	
 	public treasureMap() {
 		super();
-		tooltipOrNot(true);
-		setInfo("rightClick for a suprise");
 		setMaxStackSize(1);
 	}
-	private Boolean firstUse = true;
-	private int xCoord;
-	private int yCoord;
-	private int zCoord;
-	NBTTagCompound compound = new NBTTagCompound();
 	
-	private void setUse(Boolean use) {
-		NBTTagList nbttaglist1 = compound.getTagList("use", 1);
-		compound.setBoolean("firstUseOrNot", use);
-	}
-	
-	private Boolean getUse(){
-		NBTTagList nbttaglist = compound.getTagList("use", 1);
-        firstUse = compound.getBoolean("firstUseOrNot");
-        return firstUse;
-    }
+	private int firstDist; 
+	private int secondDist;
+	private int thirdDist;
 	
 	@Override
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
-		int playerPosX = (int) player.posX;
-		int playerPosZ = (int) player.posZ; 
-		Random Coord = new Random();
-		xCoord = Coord.nextInt(20) + playerPosX;
-		yCoord = Coord.nextInt(40);
-		zCoord = Coord.nextInt(20) + playerPosZ;
-		//if(getUse()){
-			ItemStack anmcIngot = new ItemStack(anmcItems.ingot);
-			world.setBlock(xCoord, yCoord, zCoord, Block.getBlockFromName("minecraft:chest"));
-			TileEntityChest chest = (TileEntityChest) world.getTileEntity(xCoord, yCoord, zCoord);
-			if(chest != null){
-				chest.setInventorySlotContents(15, anmcIngot);
-			}
-			setUse(false);
-		//}else{
-			//System.out.println("already used");
-			//return false;
-		//}
-		return false;
+	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){
+		itemstack.setItemDamage(4);
+		if(itemstack.getItemDamage() <= 3){
+			itemstack.setItemDamage(itemstack.getItemDamage() - 1);
+		}
+		if(itemstack.getItemDamage() == 0){
+			itemstack.stackSize--;
+		}
+		return itemstack;
     }
-
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4){
     		if(Keyboard.isKeyDown(42)){
-    			if(getUse() == true){
-    				list.add(StatCollector.translateToLocal("< " + "rightClick for suprise" + " >"));
+    			if(itemstack.getItemDamage() == 3){
+    				list.add(StatCollector.translateToLocal("< " + "first distance = " + firstDist + " >"));
+    			}else if(itemstack.getItemDamage() == 2){
+    				list.add(StatCollector.translateToLocal("< " + "first distance = " + firstDist + " >"));
+    				list.add(StatCollector.translateToLocal("< " + "second distance = " + secondDist + " >"));
+    			}else if(itemstack.getItemDamage() == 1){
+    				list.add(StatCollector.translateToLocal("< " + "first distance = " + firstDist + " >"));
+    				list.add(StatCollector.translateToLocal("< " + "second distance = " + secondDist + " >"));
+    				list.add(StatCollector.translateToLocal("< " + "third distance = " + thirdDist + " >"));
     			}else{
-    				list.add(StatCollector.translateToLocal("the chest has spawned at :"));
-    				list.add(StatCollector.translateToLocal("X:" + xCoord));
-    				list.add(StatCollector.translateToLocal("Y:" + yCoord));
-    				list.add(StatCollector.translateToLocal("Z:" + zCoord));
+    				list.add(StatCollector.translateToLocal("< no distances were set >"));
     			}
+
     		}else{
-    			list.add("< Hold shift for info >");
+    			list.add("< Hold shift for more info");
     		}
     }
 	       

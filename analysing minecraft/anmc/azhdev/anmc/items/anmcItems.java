@@ -1,18 +1,14 @@
 package azhdev.anmc.items;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
-import azhdev.anmc.items.custom.itemWrench;
-import azhdev.anmc.items.custom.suckUpgrade;
-import azhdev.anmc.items.custom.tempItem;
-import azhdev.anmc.items.custom.treasureMap;
+import azhdev.anmc.items.custom.ItemBattery;
 import azhdev.anmc.items.custom.anmcIngot;
+import azhdev.anmc.items.custom.itemWrench;
 import azhdev.anmc.items.custom.speedUpgrade;
+import azhdev.anmc.items.custom.suckUpgrade;
+import azhdev.anmc.items.custom.treasureMap;
 import azhdev.anmc.misc.CreativeTabAM;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * 
@@ -26,9 +22,9 @@ public class anmcItems {
 	public static Item treasureMap;
 	public static Item ingot;
 	public static Item wrench;
-	public static Item temp;
 	public static Item upgrade;
 	public static Item suckUpgrade;
+	public static Item itemBattery;
 	
 	public static void init(){
 		treasureMap = new treasureMap();
@@ -37,16 +33,12 @@ public class anmcItems {
 		GameRegistry.registerItem(ingot, "anmcIngot");
 		wrench = new itemWrench();
 		GameRegistry.registerItem(wrench, "wrench");
-		//temp = new tempItem();
-		//GameRegistry.registerItem(temp, "temp");
 		upgrade = new speedUpgrade();
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		suckUpgrade = new suckUpgrade();
 		GameRegistry.registerItem(suckUpgrade, "suckUpgrade");
-	}
-	
-	public static void addNames(){
-		
+		itemBattery = new ItemBattery();
+		GameRegistry.registerItem(itemBattery, "itembattery");		
 	}
 	
 	public static void setTab(){
@@ -55,5 +47,6 @@ public class anmcItems {
 		wrench.setCreativeTab(CreativeTabAM.tabsAM);
 		upgrade.setCreativeTab(CreativeTabAM.tabsAM);
 		suckUpgrade.setCreativeTab(CreativeTabAM.tabsAM);
+		itemBattery.setCreativeTab(CreativeTabAM.tabsAM);
 	}
 }

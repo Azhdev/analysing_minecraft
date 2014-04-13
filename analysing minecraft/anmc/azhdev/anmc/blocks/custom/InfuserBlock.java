@@ -29,7 +29,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 
 public class InfuserBlock extends BlockContainer{
-
+		
+	
 	public InfuserBlock(Material material) {
 		super(material);
 		setBlockName("Infuser");
@@ -39,7 +40,7 @@ public class InfuserBlock extends BlockContainer{
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register){
-		blockIcon = register.registerIcon("anmc:infuser");
+		blockIcon = register.registerIcon("anmc:desk");
 	}
 	
 	@Override

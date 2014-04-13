@@ -23,6 +23,6 @@ public class ClientProxy extends CommonProxy {
 	public void initRendering() {
 		ModelBattery model = new ModelBattery();
 			RenderingRegistry.registerEntityRenderingHandler(entityBattery.class, new renderBattery(model));
-			MinecraftForgeClient.registerItemRenderer(anmcItems.temp, new renderBatteryitem(model));
+			MinecraftForgeClient.registerItemRenderer(anmcItems.itemBattery, new renderBatteryitem(model));
 	}
 }

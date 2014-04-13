@@ -8,6 +8,16 @@ import net.minecraft.item.ItemStack;
 import azhdev.anmc.blocks.tileEntities.TileEntityInfuser;
 import azhdev.anmc.client.Slots.SlotInfuserOutput;
 
+/**
+ * 
+ * ContainerInfuser.java
+ *
+ * @author Azhdev
+ *
+ * copyright 2014© Azhdev
+ *
+ */
+
 public class ContainerInfuser extends Container{
 
 	private TileEntityInfuser infuser;
@@ -15,8 +25,7 @@ public class ContainerInfuser extends Container{
 	private final int playerInvColumns = 9;
 	private final int xCoordFirstSlotInRowPlayerInv = 8;
 	private final int yCoordFirstSlotInColumnPlayerInv = 72;
-	
-	
+		
 	public ContainerInfuser(InventoryPlayer playerInv, TileEntityInfuser infuser){
 		this.infuser = infuser;
 		
@@ -34,6 +43,7 @@ public class ContainerInfuser extends Container{
 		this.addSlotToContainer(new Slot(infuser, 1, 26, 17));
 		this.addSlotToContainer(new Slot(infuser, 2, 44, 17));
 		this.addSlotToContainer(new SlotInfuserOutput(infuser, 3, 118, 17));
+		this.addSlotToContainer(new Slot(infuser, 4, 26, 50));
 	}
 	
 	public void addVanillaSlots(InventoryPlayer playerInv, TileEntityInfuser infuser){
