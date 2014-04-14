@@ -1,0 +1,19 @@
+tile.battery.name=Battery
+tile.CeneriumOre.name=Cenerium ore
+tile.EtebriumOre.name=Etebrium ore
+tile.EdomiumOre.name=Edomium ore
+tile.Infuser.name=Infuser
+tile.ILMBlock.name=ILM
+tile.BlockILMCable.name=Inventory linking cable
+tile.Pipe.name=Pipe
+tile.extractPipe.name=extraction pipe
+
+item.anmcHammer.name=Hammer
+item.anmcIngot.name=Cenerium ingot
+item.tempItem.name=temp
+item.treasureMap.name=Treasure map
+item.itemWrench.name=Wrench
+item.speedUpgrade.name= Speed Upgrade
+item.suckUpgrade.name=suction enhancement tool
+
+itemGroup.analysing minecraft=Analysing Minecraft
