@@ -1,0 +1,52 @@
+package azhdev.anmc.items.custom;
+
+import java.util.List;
+
+import org.lwjgl.input.Keyboard;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+public class uberPick extends ItemPickaxe {
+	
+	private int mode = 0;
+	
+	public uberPick(ToolMaterial d) {
+		super(d);
+	}
+	
+	public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
+		if(Keyboard.isKeyDown(42)){
+			if(itemstack.getItemDamage() == 3){
+				itemstack.setItemDamage(0);
+				return true;
+			}else{
+				itemstack.setItemDamage(itemstack.getItemDamage() + 1);
+				return true;
+			}
+		}else{
+			return false;
+		}
+		
+	}
+	@Override
+	public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4){
+
+    		if(Keyboard.isKeyDown(42)){
+    			if(mode == 0){
+    				list.add("< the pick will mine normally >");
+    			}else if(mode == 1){
+    				list.add("< the pick will mine 3x1 >");
+    			}else if(mode == 2){
+    				list.add("< the pick will mine 1x3 >");
+    			}else if(mode == 3){
+    				list.add("< the pick will mine 3x3");
+    			}
+    		}else{
+    			list.add("< Hold shift for info >");
+    		}
+		}
+
+}
