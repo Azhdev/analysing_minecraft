@@ -61,13 +61,13 @@ public class TileEntityILGeneric extends TileEntity implements IInventory{
 		setAttachedCables(Sides);
 	}
 	
-	private void setAttachedCables(boolean[] sides){
+	public void setAttachedCables(boolean[] sides){
 		for(int i = 0; i > 5; i++){
 			connectedSides[i] = sides[i];
 		}
 	}
 	
-	private boolean[] getConnectedSides(){
+	public boolean[] getConnectedSides(){
 		return connectedSides;
 	}
 	

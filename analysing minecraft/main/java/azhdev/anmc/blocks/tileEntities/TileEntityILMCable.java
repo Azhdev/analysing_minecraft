@@ -1,12 +1,8 @@
 package azhdev.anmc.blocks.tileEntities;
 
 import azhdev.anmc.Generic.TileEntityILGeneric;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class TileEntityILMCable extends TileEntityILGeneric implements IInventory{
@@ -26,61 +22,52 @@ public class TileEntityILMCable extends TileEntityILGeneric implements IInventor
 	public void updateEntity(){
 		
 	}
-		
+	
 	@Override
-	public int getSizeInventory() {
-		return 0;
+	public void updateCable(World world, int x, int y, int z){
+		boolean[] Sides = new boolean[6];
+		if(world.getBlock(x + 1, y, z) instanceof IInventory || world.getBlock(x + 1, y, z) instanceof ISidedInventory){
+			Sides[0] = true;
+		}else{
+			Sides[0] = false;
+		}
+		if(world.getBlock(x - 1, y, z) instanceof IInventory || world.getBlock(x - 1, y, z) instanceof ISidedInventory){
+			Sides[1] = true;
+		}else{
+			Sides[1] = false;
+		}
+		if(world.getBlock(x, y, z + 1) instanceof IInventory || world.getBlock(x, y, z + 1) instanceof ISidedInventory){
+			Sides[2] = true;
+		}else{
+			Sides[2] = false;
+		}
+		if(world.getBlock(x, y, z - 1) instanceof IInventory || world.getBlock(x, y, z - 1) instanceof ISidedInventory){
+			Sides[3] = true;
+		}else{
+			Sides[3] = false;
+		}
+		if(world.getBlock(x, y + 1, z) instanceof IInventory || world.getBlock(x, y + 1, z) instanceof ISidedInventory){
+			Sides[4] = true;
+		}else{
+			Sides[4] = false;
+		}
+		if(world.getBlock(x, y - 1, z) instanceof IInventory || world.getBlock(x, y - 1, z) instanceof ISidedInventory){
+			Sides[5] = true;
+		}else{
+			Sides[5] = false;
+		}
+		setAttachedCables(Sides);
 	}
-
+	
 	@Override
-	public ItemStack getStackInSlot(int var1) {
-		return null;
+	public void setAttachedCables(boolean[] sides){
+		for(int i = 0; i > 5; i++){
+			connectedSides[i] = sides[i];
+		}
 	}
-
+	
 	@Override
-	public ItemStack decrStackSize(int var1, int var2) {
-		return null;
+	public boolean[] getConnectedSides(){
+		return connectedSides;
 	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int var1) {
-		return null;
-	}
-
-	@Override
-	public void setInventorySlotContents(int var1, ItemStack var2) {
-		
-	}
-
-	@Override
-	public String getInventoryName() {
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 0;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer var1) {
-		return var1.getDistanceSq(xCoord, yCoord, zCoord) <= 4;
-	}
-
-	@Override
-	public void openInventory() {}
-
-	@Override
-	public void closeInventory() {}
-
-	@Override
-	public boolean isItemValidForSlot(int var1, ItemStack var2) {
-		return false;
-	}
-
 }

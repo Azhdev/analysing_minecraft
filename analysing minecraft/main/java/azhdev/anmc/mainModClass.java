@@ -3,7 +3,6 @@ package azhdev.anmc;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import azhdev.anmc.blocks.anmcBlocks;
 import azhdev.anmc.entities.Entities;
-import azhdev.anmc.generate.GenerateTreasureChest;
 import azhdev.anmc.handlers.GenerationHandler;
 import azhdev.anmc.handlers.GuiHandler;
 import azhdev.anmc.items.anmcItems;
@@ -39,7 +38,7 @@ public class mainModClass{
 	@SidedProxy(clientSide = "azhdev.anmc.proxies.ClientProxy", serverSide = "azhdev.anmc.proxies.CommonProxy")
 	public static CommonProxy proxy;
 	
-	WorldGenerator treasureChest = new GenerateTreasureChest();
+	IWorldGenerator gen = new GenerationHandler();
 	
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event){
@@ -53,7 +52,7 @@ public class mainModClass{
 		anmcBlocks.registerTileEntities();
 		
     	
-    	GameRegistry.registerWorldGenerator((IWorldGenerator) treasureChest, 1);
+    	GameRegistry.registerWorldGenerator(gen, 1);
 		
 		Entities.init();
 		proxy.initRendering();

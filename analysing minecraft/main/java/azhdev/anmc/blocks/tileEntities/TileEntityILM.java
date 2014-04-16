@@ -49,7 +49,7 @@ public class TileEntityILM extends TileEntity implements IInventory{
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer var1) {
-		return false;
+		return var1.getDistanceSq(xCoord, yCoord, zCoord) < 4;
 	}
 
 	@Override
